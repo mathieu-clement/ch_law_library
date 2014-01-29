@@ -1,4 +1,6 @@
-package com.mathieuclement.lib.chlaw.skeleton;
+package com.mathieuclement.lib.chlaw.util;
+
+import com.mathieuclement.lib.chlaw.skeleton.Language;
 
 import java.util.HashMap;
 import java.util.Map;
