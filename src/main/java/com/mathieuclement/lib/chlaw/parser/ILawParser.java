@@ -9,7 +9,7 @@ import java.util.Map;
 public interface ILawParser {
     /**
      * Returns the fields from the "additional information" panel on the right
-     * of the Law page. Example of data:  "Abréviation" => "CP".
+     * of the Law page. Example of data:  "Abbreviation" => "CP".
      *
      * @return the fields from the "additional information" panel on the right
      * of the Law page
