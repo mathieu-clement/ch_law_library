@@ -41,17 +41,20 @@ public class Compilation {
     // Href of compilations
     private static Pattern idPattern = Pattern.compile("(\\d+)\\.html#\\d+$");
 
-    // URL to Law page
-    private static Pattern lawUrlPattern = Pattern.compile("/opc/fr/classified-compilation/(\\d+)/index\\.html");
 
     // Redirection
     private static Pattern redirectPattern = Pattern.compile("([^→]+) →");
 
     public List<Compilation> getCompilations(Language language) throws IOException {
 
+        // URL to Law page
+        Pattern lawUrlPattern = Pattern.compile("/opc/" + language.getShortCode() + "/classified-compilation/(\\d+)/index\\.html");
+
         Document doc = Jsoup.connect(String.format(
                 "http://www.admin.ch/opc/%s/classified-compilation/%s.html",
-                language.getShortCode(), this.id)).get();
+                language.getShortCode(), this.id))
+                .header("Accept-Language", language.getShortCode() + ";q=1.0")
+                .get();
         Elements elements;
         // 1st type of page: Only links to compilations
         elements = doc.select("table tbody td a[href]");
