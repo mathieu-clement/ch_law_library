@@ -39,13 +39,13 @@ public class Compilation {
     }
 
     // Href of compilations
-    private static Pattern idPattern = Pattern.compile("(\\d+)\\.html");
+    private static Pattern idPattern = Pattern.compile("(\\d+)\\.html#\\d+$");
 
     // URL to Law page
     private static Pattern lawUrlPattern = Pattern.compile("/opc/fr/classified-compilation/(\\d+)/index\\.html");
 
-    // Links like "173.41". Note: some may have three groups: "935.621.31"
-    private static Pattern linkWithDigitsPattern = Pattern.compile("^\\d+\\.\\d+");
+    // Redirection
+    private static Pattern redirectPattern = Pattern.compile("([^→]+) →");
 
     public List<Compilation> getCompilations(Language language) throws IOException {
 
@@ -54,34 +54,24 @@ public class Compilation {
                 language.getShortCode(), this.id)).get();
         Elements elements;
         // 1st type of page: Only links to compilations
-        elements = doc.select("#content table.law-index tr td[style=padding-left:0px] a");
+        elements = doc.select("table tbody td a[href]");
         List<Compilation> compilations = new ArrayList<Compilation>(elements.size());
         for (Element linkElement : elements) {
-            Matcher matcher = idPattern.matcher(linkElement.attr("href"));
+            Matcher matcher = lawUrlPattern.matcher(linkElement.attr("href"));
             if (matcher.find()) {
-                compilations.add(new Compilation(linkElement.text(), matcher.group(1)));
-            }
-        }
-
-        // 2nd type of page. Links to some law on some compilation,
-        // and direct links to actual laws
-        elements = doc.select("#content table.law-index tr td[style=width: 30px]");
-        if (elements != null)
-            elements = doc.select("#content table.law-index tr");
-        for (Element trElement : elements) {
-            // Filter out rows with bold titles (and only 1 td cell)
-            if (trElement.getElementsByTag("td").size() == 2) {
-                // Parse links in the right column
-                for (Element linkElement : trElement.getElementsByTag("td").get(1).getElementsByTag("a")) {
-                    Matcher matcher = linkWithDigitsPattern.matcher(linkElement.text());
+                compilations.add(new Law(linkElement.text(),
+                        linkElement.parent().parent().select("a[name]").attr("name"),
+                        matcher.group(1)));
+            } else {
+                String catTitle = linkElement.parent().text();
+                matcher = redirectPattern.matcher(catTitle);
+                if (matcher.find()) {
+                    compilations.add(new Compilation(matcher.group(1), linkElement.text()));
+                } else {
+                    matcher = idPattern.matcher(linkElement.attr("href"));
                     if (matcher.find()) {
-                        compilations.add(new Law(UNKNOWN_NAME, linkElement.text()));
-                    }
-                    matcher = lawUrlPattern.matcher(linkElement.attr("href"));
-                    if (matcher.find()) {
-                        compilations.add(new Law(linkElement.text(),
-                                trElement.getElementsByTag("td").get(0).text(),
-                                matcher.group(1)));
+                        compilations.add(new Compilation(linkElement.text(),
+                                linkElement.parent().parent().child(0).text()));
                     }
                 }
             }

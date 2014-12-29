@@ -33,8 +33,9 @@ public class CompilationTest {
     public void testCompilationsWithLaws() throws Exception {
         Compilation compilation = new Compilation("Propriété intellectuelle et protection des données", "23");
         List<Compilation> compilations = compilation.getCompilations(Language.FRENCH);
-        Assert.assertTrue(hasLaw(new Law(Compilation.UNKNOWN_NAME, "172.010.31"), compilations));
-        Assert.assertTrue(hasLaw(new Law(Compilation.UNKNOWN_NAME, "173.41"), compilations));
+        Assert.assertTrue(hasCompilation(new Compilation("Statut, tâches, organisation", "172.010.31"), compilations));
+        Assert.assertTrue(hasCompilation(new Compilation("Tribunal fédéral des brevets", "173.41"), compilations));
+        Assert.assertTrue(hasLaw(new Law("Loi fédérale du 25 juin 1954 sur les brevets d’invention (Loi sur les brevets, LBI)", "232.14"), compilations));
         Assert.assertTrue(hasLaw(new Law(
                 "Loi fédérale du 9 octobre 1992 sur le droit d’auteur et les droits voisins (Loi sur le droit d’auteur, LDA)",
                 "231.1", "19920251"), compilations));
