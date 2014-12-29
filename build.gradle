@@ -1,7 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 version = '1.0'
 
 repositories {
@@ -24,3 +25,38 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+
+/**
+ * Find the javac executable for the current sourceCompatibility. If the current JVM match then it return null.
+ */
+/*
+String findJavacExecutable() {
+    File javaHome = new File( System.getProperty( "java.home" ) )
+    if( javaHome.getName().equals( "jre" ) ) {
+        javaHome = javaHome.getParentFile()
+    }
+    if( javaHome.getName().startsWith( "jdk${sourceCompatibility}" ) ) {
+        return null
+    }
+    File installDir = javaHome.getParentFile();
+    for( File file : installDir.listFiles() ) {
+        if( file.getName().startsWith( "jdk${sourceCompatibility}" ) ) {
+            return new File( file, "bin/javac" ).getAbsolutePath()
+        }
+    }
+    println "Warning: javac executable for ${sourceCompatibility} was not found."
+    return null
+}
+task findJavac {
+    description '===  find and set the javac executable for the given sourceCompatibility ==='
+    compileJava.dependsOn(findJavac)
+    doLast {
+        String executable = findJavacExecutable()
+        if( executable != null ) {
+            println "\tjavac: ${executable}"
+            compileJava.options.fork = true
+            compileJava.options.forkOptions.executable = executable
+        }
+    }
+}
+*/
