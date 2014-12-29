@@ -1,6 +1,6 @@
 package com.mathieuclement.lib.chlaw.skeleton;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -39,6 +39,7 @@ public class CompilationTest {
         Assert.assertTrue(hasLaw(new Law(
                 "Loi fédérale du 9 octobre 1992 sur le droit d’auteur et les droits voisins (Loi sur le droit d’auteur, LDA)",
                 "231.1", "19920251"), compilations));
+
     }
 
     public static boolean hasCompilation(Compilation compilation, Collection<Compilation> compilations) {
