@@ -41,7 +41,7 @@ public interface ILawParser {
      * if it exists
      * @return the law abbreviation, if any or null.
      */
-    LocalizedString getAbreviation();
+    LocalizedString getAbbreviation();
 
     /**
      * Returns date of last update, such as "1<sup>er</sup> janvier 2014"
