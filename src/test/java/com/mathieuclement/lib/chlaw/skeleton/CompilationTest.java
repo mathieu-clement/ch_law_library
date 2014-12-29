@@ -1,6 +1,5 @@
 package com.mathieuclement.lib.chlaw.skeleton;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Collection;

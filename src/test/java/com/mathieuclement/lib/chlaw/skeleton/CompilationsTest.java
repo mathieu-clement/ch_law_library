@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Collection;
 
 import static com.mathieuclement.lib.chlaw.skeleton.CompilationTest.hasCompilation;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 public class CompilationsTest {
 
