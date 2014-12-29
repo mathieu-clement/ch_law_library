@@ -17,8 +17,8 @@ public interface ILawParser {
     Map<LocalizedString, LocalizedString> getAdditionalInformation();
 
     /**
-     * Returns the identifier of the law, suc as "311.0"
-     * @return the identifier of the law, suc as "311.0"
+     * Returns the identifier of the law, such as "311.0"
+     * @return the identifier of the law, such as "311.0"
      */
     LocalizedString getLawId();
 
